@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         
-        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
     </head>
@@ -17,29 +17,26 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{path('home')}}">home</a>
                     </li>
-                   <li class="nav-item">
-                        <a class="nav-link" href="{{path('about')}}">About</a>
+                     <li class="nav-item">
+                        <a class="nav-link" href="{{path('ads-index')}}">annonces</a>
                     </li>
+                  
                 </ul>
          
                   <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Mon Compte</a>
+                         <a class="nav-link" href="#">Mon Compte</a>
                     </li>
                 </ul>
             </div>
    </nav>
+          <script  src="/js/jquery.js"></script>
+           <script  src="/js/popper.js"></script>
+         <script  src="/js/bootstrap.min.js"></script>
 
-
-
-
-
-
-       
-          <script  src="js/jquery.js"></script>
-           <script  src="js/popper.js"></script>
-         <script  src="js/bootstrap.min.js"></script>
-        {% block body %}{% endblock %}
+      <div class="container mt-5">
+           {% block body %}{% endblock %}
+      </div>
         {% block javascripts %}{% endblock %}
     </body>
 </html>
