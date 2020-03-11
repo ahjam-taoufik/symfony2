@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Ad;
 use App\Form\AdType;
+use App\Entity\Image;
 use App\Repository\AdRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,8 +35,15 @@ class AdController extends AbstractController
      */
     public function create(Request $request, EntityManagerInterface $manager){
           $ad=new Ad();
+        
+        // ce block pour test l'ajout d'un sous formulaire
+        //   $image=new Image();
+        //   $image->setUrl("https://via.placeholder.com/1000x400")
+        //         ->setCaption('titre1');
+        //   $ad->addImage($image);
+
+
           $form=$this->createForm(AdType::class,$ad);
-          
           // handle c'est t'a dire gére la request
           $form->handleRequest($request);
             // dump($ad);
@@ -57,6 +65,11 @@ class AdController extends AbstractController
 
 
             if ($form->isSubmitted() && $form->isValid()) {
+                 foreach ($ad->getImages() as $image) {
+                     $image->setAd($ad);
+                     $manager->persist($image);
+                 }
+
                 //$manager=$this->getDoctrine()->getManager();
                 $manager->persist($ad);
                 $manager->flush();  
@@ -90,6 +103,7 @@ class AdController extends AbstractController
                'form'=>$form->createView()
         ]);
     }
+
 
 
     /**

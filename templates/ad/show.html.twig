@@ -27,7 +27,7 @@
                             <div class="carousel-inner">
                                 {% for image in ad.images %} 
                                   <div class="carousel-item {% if loop.first %} active {% endif %}">
-                                    <img src="https://via.placeholder.com/200x200"  style="height: 300px;width: 80%; display:block ;"{#{{image.url}} #} class="d-block w-100" alt="ad">
+                                    <img src="{{image.url}}"  style="height: 300px;width: 80%; display:block ;"{#{{https://via.placeholder.com/200x200}} #} class="d-block w-100" alt="ad">
                                   
                                        <div class="carousel-caption d-lg-none d-md-block">
                                              <h5>{{ad.title}}</h5>

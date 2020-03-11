@@ -1,11 +1,107 @@
 {% extends "base.html.twig" %}
+{% form_theme form _self %}
 
 {% block body %}
         {{ form_start(form) }}
 
-         {{ form_widget(form) }}
+         {{ form_widget(form) }}{# ce form represente la form annonce #}
          
           <button type="submit" class="btn btn-primary">creer la nouvelle annonce</button>
 
         {{ form_end(form) }}
 {% endblock %}
+
+
+{% block _ad_images_widget %}
+     <p>ici vous pouvez ajouter vos propre images</p>
+ 
+      {{ form_widget(form) }} {# ce form represente la form image #}
+       
+       {# on ajoute ce champ pour resoudre le bug d'id qui ce double #}
+          <input type="hidden" id="widget-counter" value="0">
+       {# on ajoute ce champ pour resoudre le bug d'id qui ce double #}
+
+
+       <div class="form-group">
+           <button type="button" id="add-image" class="btn btn-primary">ajout d'une image</button>
+       </div>
+{% endblock %}
+
+{% block _ad_images_entry_widget %}
+      <div class="form-group" id="block_{{id}}">
+                <div class="row">
+                   <div class="col-10">
+                                        
+                                <div class="row">
+                                <div class="col">
+                                        {{ form_widget(form.url) }} {# ce form represente la form imageType #}
+                                </div>
+                                <div class="col">
+                                        {{ form_widget(form.caption) }} {# ce form represente la form imageType #}
+                                </div>
+                                </div>
+                   
+                   </div>
+                   <div class="col-2">
+                         <button type="button" data-action="delete" data-target="#block_{{id}}" class="btn btn-danger" >X</button>
+                   </div>
+ 
+                </div>
+
+
+
+
+      </div>
+
+
+{% endblock %}
+
+
+{# on defini ici la façon q'on va afficher chaque entry dans le sous formulaire #}
+
+{% block _ad_images_entry_row %}
+
+  {{ form_widget(form) }}
+
+{% endblock %}
+
+
+{% block javascripts %}
+       <script>
+         $('#add-image').click(function(){
+
+          // on supprime ce champ et deplacer par le champ qui ce trouve au dessus pour resoudre le bug d'id qui ce double 
+           // const index=$('#ad_images div.form-group').length;
+          // on ajoute ce champ pour resoudre le bug d'id qui ce double 
+             const index=+$('#widget-counter').val();//on ajout un plus parceque javascript fait la concatenation
+            // console.log(index);
+
+            //console.log(index);
+            const tmpl=$('#ad_images').data('prototype').replace(/__name__/g,index);//le g pour repeter plusieurs fois
+            //console.log(tmpl);
+            $('#ad_images').append(tmpl);
+
+            // on ajoute ce champ pour resoudre le bug d'id qui ce double 
+            $('#widget-counter').val(index+1);            
+
+            handleDeleteButtons();
+ 
+         });
+
+         function handleDeleteButtons(){
+                 $('button[data-action="delete"]').click(function(){
+                    const target =this.dataset.target;
+                    //console.log(target);
+                    $(target).remove();
+
+                      });
+         }
+           // appel de cette fonction au chargement de la page
+           handleDeleteButtons();
+       </script>
+
+
+
+
+{% endblock %}
+
