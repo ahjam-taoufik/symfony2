@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ImageRepository")
@@ -18,17 +19,26 @@ class Image
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Url()
      */
     private $url;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(
+     *      min = 10,
+     *      max = 250,
+     *      minMessage = "Your first name must be at least {{ limit }} characters long, merciii",
+     *      maxMessage = "Your first name cannot be longer than {{ limit }} characters, mercii")
+     * 
      */
     private $caption;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Ad", inversedBy="images")
      * @ORM\JoinColumn(nullable=false)
+     * 
+     * 
      */
     private $ad;
 

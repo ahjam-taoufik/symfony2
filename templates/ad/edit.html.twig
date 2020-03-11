@@ -1,20 +1,25 @@
 {% extends "base.html.twig" %}
+
 {% form_theme form 'ad/_collection.html.twig' %}
 
 {% block body %}
+       <h3>modification de votre annonce :</h3>  <h1> {{ ad.title }}</h1>
+
         {{ form_start(form) }}
 
          {{ form_widget(form) }}{# ce form represente la form annonce #}
          
-          <button type="submit" class="btn btn-primary">creer la nouvelle annonce</button>
+          <button type="submit" class="btn btn-primary">Enregistrer votre midification</button>
 
         {{ form_end(form) }}
 {% endblock %}
 
 
 
+
 {% block javascripts %}
-        <script src="/js/ad.js"></script>
+       <script src="/js/ad.js"></script>
+
 
 {% endblock %}
 

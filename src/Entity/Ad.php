@@ -67,9 +67,13 @@ class Ad
      * @ORM\Column(type="integer")
      */
     private $rooms;
-
+//////////////////////////////////////////////////////////////////////////////
+///////la fonction Valid() permet a valider le sous formulaire des images/////
+//////////////////////////////////////////////////////////////////////////////
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Image", mappedBy="ad", orphanRemoval=true)
+     * @Assert\Valid()
+     * 
      */
     private $images;
 
