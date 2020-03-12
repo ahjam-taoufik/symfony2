@@ -5,6 +5,7 @@ namespace App\DataFixtures;
 use App\Entity\Ad;
 use Faker\Factory;
 //use Cocur\Slugify\Slugify;
+use App\Entity\User;
 use App\Entity\Image;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -13,17 +14,35 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
-
         $faker=Factory::create('fr-FR');
-        //$slugify=new Slugify();
-        
+       //creation des utilisateurs
+       $users=[];
+       for ($i=1; $i <=10 ; $i++) { 
+            $user=new User();
+
+            $user->setFistName($faker->firstname)
+                 ->setLastName($faker->lastname)
+                 ->setEmail($faker->email)
+                 ->setIntroduction($faker->sentence())
+                 ->setDescription('<p>'. join('</p><p>',$faker->paragraphs(3)).'</p>')
+                 ->setHash('password');
+
+             $manager->persist($user);
+             $users[]=$user;    
+
+       }
+
+        // creation des annonces
+        //$slugify=new Slugify(); 
     for ($i=1; $i <25 ; $i++) { 
          $title=$faker->sentence();
          $coverImage=$faker->imageUrl(800,400);
          $introduction=$faker->paragraph(2);
          $content= '<p>'. join('</p><p>',$faker->paragraphs(5)).'</p>';
          //$slug=$slugify->slugify($title);
-
+        
+        $user=$users[mt_rand(0, count($users) -1 )];
+           
         $Ad=new Ad();
         $Ad->setTitle($title)
            //->setSlug($slug)
@@ -31,7 +50,8 @@ class AppFixtures extends Fixture
            ->setIntroduction($introduction)
            ->setContent($content)
            ->setPrice(mt_rand(50,120))
-           ->setRooms(mt_rand(2,5));
+           ->setRooms(mt_rand(2,5))
+           ->setAuthor($user);
 
            for ($j=1; $j<= mt_rand(2,5) ; $j++) { 
                $image=new Image();
