@@ -6,12 +6,19 @@ use Cocur\Slugify\Slugify;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\HasLifecycleCallbacks()
+ * @UniqueEntity(
+ *     fields={"email"},
+ *     message="une autre utilisateur possede deja cette email , madifier le SVP."
+ * )
  */
-class User
+class User implements UserInterface
 {
     /**
      * @ORM\Id()
@@ -22,21 +29,27 @@ class User
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
+     * 
      */
     private $fistName;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="doit etre remplie")
      */
     private $lastName;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Email(message="entrer un email valide")
+     * 
      */
     private $email;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Url(message="entrer un Url valide pour votre avatar")
      */
     private $picture;
 
@@ -44,6 +57,12 @@ class User
      * @ORM\Column(type="string", length=255)
      */
     private $hash;
+
+
+    /**
+     * @Assert\EqualTo(propertyPath="hash", message="vous n'avez pas correctement confirmé votre mot de passe")
+     */
+    public $passwordConfirm;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -218,4 +237,27 @@ class User
 
         return $this;
     }
+
+public function getRoles(){
+         return ['ROLE_USER'];
+}
+
+public function getPassword(){
+    return $this->hash;
+}
+
+public function getSalt(){}//il renvoi l'algorithm qui'a encoder le password
+
+
+public function getUsername(){
+    return $this->email;
+}
+
+public function eraseCredentials(){}
+
+
+
+
+
+///////////////////////////////////////////
 }

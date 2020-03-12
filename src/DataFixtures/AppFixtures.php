@@ -9,23 +9,49 @@ use App\Entity\User;
 use App\Entity\Image;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AppFixtures extends Fixture
 {
+    
+    private $encoder;
+    public function __construct(UserPasswordEncoderInterface $encoder){
+
+          $this->encoder=$encoder;  
+    }
+
     public function load(ObjectManager $manager)
     {
         $faker=Factory::create('fr-FR');
        //creation des utilisateurs
        $users=[];
+       $genres=['male','female'];
+
        for ($i=1; $i <=10 ; $i++) { 
             $user=new User();
 
-            $user->setFistName($faker->firstname)
+            $genre=$faker->randomElement($genres);
+             
+
+            $picture='https://randomuser.me/api/portraits/';
+            $pictureId=$faker->numberBetween(1,99). '.jpg';
+
+
+            if($genre=="male") $picture=$picture.'men/'. $pictureId;
+            else $picture=$picture.'women/' . $pictureId;
+            //on resume ces deux ligne avec condition ternaire :
+            // $picture .=($genre=="male"? 'men/' :'women/').$picturId;
+             
+          
+            $hash=$this->encoder->encodePassword($user,'password');
+            $user->setFistName($faker->firstname($genre))
                  ->setLastName($faker->lastname)
                  ->setEmail($faker->email)
                  ->setIntroduction($faker->sentence())
                  ->setDescription('<p>'. join('</p><p>',$faker->paragraphs(3)).'</p>')
-                 ->setHash('password');
+                 ->setHash($hash)
+                 ->setPicture($picture);
+
 
              $manager->persist($user);
              $users[]=$user;    
