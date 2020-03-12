@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\Ad;
 use App\Form\AdType;
+use App\Entity\Ad;
 use App\Entity\Image;
 use App\Repository\AdRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -11,6 +11,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AdController extends AbstractController
@@ -31,6 +33,7 @@ class AdController extends AbstractController
     
     /**
      * @Route("/ads/new",name="ads-create")
+     * @IsGranted("ROLE_USER")  // cette annotation pour les user connecter seulement
      * 
      */
     public function create(Request $request, EntityManagerInterface $manager){
@@ -112,6 +115,7 @@ class AdController extends AbstractController
 /**
  * 
  * @Route("/ads/{slug}/edit" , name="ads_edit")
+ * @Security("is_granted('ROLE_USER') and user=== ad.getAuthor()",message="interdiiiit") // on appel ça ,  expression secutity
  * 
  */
   public function edit(Ad $ad, Request $request, EntityManagerInterface $manager){
@@ -155,6 +159,24 @@ class AdController extends AbstractController
             'ad'=>$ad 
         ]);
     }
+    /**
+     *@Route("/ads/{slug}/delete",name="ads_delete")
+     *@Security("is_granted('ROLE_USER') and user=== ad.getAuthor()",message="interdiiiit de supppp")
+     * 
+     */
+    public function delete(Ad $ad , EntityManagerInterface $manager){
+          $manager->remove($ad);
+          $manager->flush();
+          $this->addFlash(
+            'success',
+            " l'annonce <strong>test</strong> <strong>{$ad->getTitle()}</strong> a bien été supprimer "
+      );
+          return $this->redirectToRoute("ads-index");
+
+
+    }
+
+
 
 
 

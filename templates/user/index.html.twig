@@ -55,6 +55,10 @@
                          {{ ad.introduction }}
                       </p>
                        <a href="{{varUrl}}" class="btn btn-secondary">En savoir plus</a>
+                        {% if app.user and app.user== ad.author %}
+                             <a href="{{path('ads_edit',{slug:ad.slug})}}" class="btn btn-primary">modifier l'annonce</a>
+
+                        {% endif %}
 
                   </div> 
 

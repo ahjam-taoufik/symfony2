@@ -5,6 +5,7 @@ namespace App\DataFixtures;
 use App\Entity\Ad;
 use Faker\Factory;
 //use Cocur\Slugify\Slugify;
+use App\Entity\Role;
 use App\Entity\User;
 use App\Entity\Image;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -23,8 +24,27 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $faker=Factory::create('fr-FR');
+        //l'ajout d'un role dans la table Role
+        $adminRole=new Role();
+        $adminRole->setTitle('ROLE_ADMIN');
+        $manager->persist($adminRole);
+         //l'ajout d'un user admin dans la table user
+          $adminUser=new User(); 
+          $adminUser->setFistName('Taoufik')
+                    ->setLastName('Ahjam')
+                    ->setEmail('taoufikahjam@gmail.com')
+                    ->setHash($this->encoder->encodePassword($adminUser,'password'))
+                    ->setPicture('https://randomuser.me/api/portraits/men/94.jpg')
+                    ->setIntroduction($faker->sentence())
+                    ->setDescription('<p>'. join('</p><p>',$faker->paragraphs(3)).'</p>')
+                    ->addUserRole($adminRole);
+         $manager->persist($adminUser);
+
+
+         
+
        //creation des utilisateurs
-       $users=[];
+       $users=[];  
        $genres=['male','female'];
 
        for ($i=1; $i <=10 ; $i++) { 
