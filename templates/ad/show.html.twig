@@ -50,24 +50,27 @@
                   {#/////////////////  #}
               </div>
               <div class="col">
+                {% set a= ad.author %}
                   <div class="row">
-                      <div class="col-4">
-                           <img src="https://via.placeholder.com/64x64" alt="avatar">
+                      <div class="col-3">
+                           {# <img src="https://via.placeholder.com/64x64" alt="avatar"> #}
+                               <a href="{{path('user_show',{'slug':a.slug})}}">
+                               <img src="{{a.picture}}" class="avatar avatar-medium" alt=" avatar de {{a.fullName}}"> 
+                                </a>
                       </div>
                       <div class="col">
-                          <h3>taoufik ahjam</h3>
+                         <a href="{{path('user_show',{'slug':a.slug})}}">
+                          <h3>{{a.fullName}}</h3>
+                          </a>
                           <span class="badge badge-primary">
-                              3 annonces
+                               {{a.ads | length}}
                           </span>
                       </div>  
                   </div>
-                   <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam, ut!</p>
-                   <p>Ut amet aliquam eligendi vero, excepturi necessitatibus rerum doloribus exercitationem.</p>
-                   <p>Consequatur sequi ea iure ipsam soluta blanditiis, corporis laborum dolores.</p>
-                   
+                      {{a.description | raw}}
               </div>
           </div>
-      </div>
+      </div> 
 
    
  

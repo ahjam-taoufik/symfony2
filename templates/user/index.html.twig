@@ -1,0 +1,79 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{user.fullName}}{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <div class="row align-items-center">
+           <div class="col-3 text-center">
+                <img src="{{user.picture}}" class="avatar mb-3" alt="{{user.fullName}}">
+                <br>
+                <span class="badge badge-primary">{{user.ads| length}} annonces</span>
+           </div>
+           <div class="col-9">
+              <h1>{{user.fullName}}</h1>
+                {# //////les boutton///////////// #}
+                  {% if user is same as(app.user) %}
+                     <div class="mt-3">
+                        <a href="{{path('account_profile')}}" class="btn btn-primary mr-2 mb-2">
+                        Modifier mes information</a>
+                        <a href="{{path('account_password')}}" class="btn btn-primary mr-2 mb-2">
+                        Modifier mon mot de passe </a>
+
+                     </div>
+                  {% endif %}       
+                {# /////////////////// #}
+           </div>
+        </div>
+            {{ user.description | raw }}
+            <hr>
+            <h2>Les annonces de {{user.fullname}}</h2>
+
+            {%  if user.ads | length > 0 %}
+             <div class="row">
+                  {% for ad in user.ads %}
+ {# //////////////////// cette section est une copier colle de index de dossier ad dans la template  #}
+             {% set varUrl=path('ad-show',{'slug':ad.slug}) %}
+              <div class="col-md-4">
+              <div class="card bg-light mb-3">
+                 <div class="card-header text-center">
+                      {{ ad.rooms }} chambres, <strong>{{ ad.price }}&euro;/nuit</strong><br>
+                       <small>Pas ancors noté</small>
+                 </div>
+               
+                  <a href="{{varUrl}}">
+                   <img src="https://via.placeholder.com/1000x400" alt="Image  exmemple"
+                   style="height: 200px;width: 100%; display:block ;">
+                   </a>
+                  <div class="card-body">
+                     <h4 class="card-title">
+                        {{ ad.title }}
+                     </h4>
+                           
+                     <p class="card-text">
+                         {{ ad.introduction }}
+                      </p>
+                       <a href="{{varUrl}}" class="btn btn-secondary">En savoir plus</a>
+
+                  </div> 
+
+            </div>
+        </div> 
+
+
+
+{# /////////////////////// #}
+                   {% endfor %}
+             </div>
+            {% else %}
+                  <div class="alert alert-warning">
+                      <p>
+                        <strong>{{user.fullName}}</strong> n'a pas encore d'annonce sur ce site .. 
+                      </p>
+                  </div>
+            {% endif %}
+
+
+    </div>
+{% endblock %}

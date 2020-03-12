@@ -84,6 +84,10 @@ class User implements UserInterface
      */
     private $ads;
 
+    public function getFullName(){
+        return "{$this->fistName} {$this->lastName}";
+    
+    }
     
     /**
      * @ORM\PrePersist

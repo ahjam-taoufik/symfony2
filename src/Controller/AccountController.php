@@ -136,14 +136,19 @@ class AccountController extends AbstractController
 
              }//end if
         }//valid
-
-
-
-
-
         return $this->render('account/password.html.twig',[
               'form'=>$form->createView()
 
+        ]);
+    }
+
+    /**
+     * @Route("/account", name="account_index")
+     *
+     */
+    public function myAccount (){
+        return $this->render('user/index.html.twig',[
+            'user'=>$this->getUser()
         ]);
     }
 
