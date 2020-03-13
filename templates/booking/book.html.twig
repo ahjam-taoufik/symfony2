@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reserver l'annonce{% endblock %}
+
+
+{% block body %}
+     <div class="container">
+          <h1>{{ad.author.fullname}}</h1>
+          <h2>Reserver pour l'Annonce : {{ ad.title }}</h2>      
+           <h3>Commencez votre reservation </h3>
+           {{ form_start(form) }}
+           <div class="alert alert-light">
+               <div class="row">
+                   <div class="col">
+                         {{ form_row(form.startDate) }}
+                   </div>
+                    <div class="col">
+                         {{ form_row(form.endDate) }}
+                   </div>
+               </div>
+           </div>
+            <h4>Montant du séjour : <spanid="amount">...</span> &euro; </h4>   
+              <span id="days">0</span> nuit(s) à {{ ad.price }} / nuit
+
+             <h3>vous avez un commentaire ?</h3>
+             {{ form_row(form.comment) }}
+
+
+            <button type="submit" class="btn btn-success">Je reserve cette annonce</button>
+            {{ form_end(form) }}
+     </div>
+  
+{% endblock %}
