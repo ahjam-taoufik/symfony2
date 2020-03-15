@@ -4,7 +4,7 @@
 
   {% block body %}
    
-   
+   {{ dump(ads) }}
     
 
    <div class="container">
@@ -24,108 +24,36 @@
 
 
   <div class="row mt-5">
-        <div class="col-md-4">
-            <div class="card bg-light mb-3">
-                 <div class="card-header text-center">
-                      3 chambres, <strong>49&euro;/nuit</strong><br>
-                       <small>Pas ancors noté</small>
-                 </div>
-                
-                  
-                 <img src="https://via.placeholder.com/1000x400" alt="Image  exmemple"
-                   style="height: 200px;width: 100%; display:block ;">
+ 
+                 {% for ad in ads %}
+                   
+              <div class="col-md-4">
+                <div class="card bg-light mb-3">
+                    <div class="card-header text-center">
+                          {{ ad.annonce.rooms }} chambres, <strong>{{ ad.annonce.price }}&euro;/nuit</strong><br>
+                          <small>{{ ad.avgRating }} noté</small>
+                    </div>
+                    
+                    <img src="https://via.placeholder.com/1000x400" alt="Image  exmemple"
+                      style="height: 200px;width: 100%; display:block ;">
 
-                  <div class="card-body">
-                     <h4 class="card-title">
-                        Appartement ouufff
-                     </h4>
+                      <div class="card-body">
+                        <h4 class="card-title">
+                            {{ ad.annonce.title }}
+                        </h4>
 
-                     <p class="card-text">
-                       Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptatem, minima!
-                     </p>
-                       <a href="#" class="btn btn-secondary">En savoir plus</a>
+                        <p class="card-text">
+                          {{ ad.annonce.introduction}}
+                        </p>
+                          <a href="#" class="btn btn-secondary">En savoir plus</a>
 
-                  </div> 
+                      </div> 
 
-            </div>
-        </div>
-
-
-         <div class="col-md-4">
-            <div class="card bg-light mb-3">
-                 <div class="card-header text-center">
-                      3 chambres, <strong>49&euro;/nuit</strong><br>
-                       <small>Pas ancors noté</small>
-                 </div>
-                  
-                 <img src="https://via.placeholder.com/1000x400" alt="Image  exmemple"
-                   style="height: 200px;width: 100%; display:block ;">
-
-                  <div class="card-body">
-                     <h4 class="card-title">
-                        Appartement ouufff
-                     </h4>
-
-                     <p class="card-text">
-                       Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptatem, minima!
-                     </p>
-                       <a href="#" class="btn btn-secondary">En savoir plus</a>
-
-                  </div> 
-
-            </div>
-        </div>
+                </div>
+              </div>
+                 {% endfor %}
 
 
-         <div class="col-md-4">
-            <div class="card bg-light mb-3">
-                 <div class="card-header text-center">
-                      3 chambres, <strong>49&euro;/nuit</strong><br>
-                       <small>Pas ancors noté</small>
-                 </div>
-                  
-                 <img src="https://via.placeholder.com/1000x400" alt="Image  exmemple"
-                   style="height: 200px;width: 100%; display:block ;">
-
-                  <div class="card-body">
-                     <h4 class="card-title">
-                        Appartement ouufff
-                     </h4>
-
-                     <p class="card-text">
-                       Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptatem, minima!
-                     </p>
-                       <a href="#" class="btn btn-secondary">En savoir plus</a>
-
-                  </div> 
-
-            </div>
-        </div>
-
-         <div class="col-md-4">
-            <div class="card bg-light mb-3">
-                 <div class="card-header text-center">
-                      3 chambres, <strong>49&euro;/nuit</strong><br>
-                       <small>Pas ancors noté</small>
-                 </div>
-                  
-                 <img src="https://via.placeholder.com/1000x400" alt="Image  exmemple"
-                   style="height: 200px;width: 100%; display:block ;">
-
-                  <div class="card-body">
-                     <h4 class="card-title">
-                        Appartement ouufff
-                     </h4>
-
-                     <p class="card-text">
-                       Lorem ipsum dolor sit, amet consectetur adipisicing elit. Voluptatem, minima!
-                     </p>
-                       <a href="#" class="btn btn-secondary">En savoir plus</a>
-
-                  </div> 
-
-            </div>
-        </div>
   </div>
 
  <h2>Nos propriètaires stars ! </h2>

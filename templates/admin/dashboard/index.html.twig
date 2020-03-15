@@ -1,0 +1,143 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Dashboard!{% endblock %}
+
+{% block body %}
+     <div class="container-fluid">
+         <div class="row">
+              <div class="col">
+                    <div class="card bg-primary text-white mb-3 text-center">
+                            <div class="card-body">
+                                <div class="row">
+                                        <div class="col-2">
+                                            <i class="fas fa-users fa-2x"></i>
+                                        </div>
+                                        <div class="col-10">
+                                            <h4 class="card-title">
+                                            {{ status.users }} utilisateurs
+                                            </h4>
+                                        </div>
+                                </div>
+                            </div>
+                    </div>
+              </div>
+              <div class="col">
+                    <div class="card bg-dark text-white mb-3 text-center">
+                                <div class="card-body">
+                                    <div class="row">
+                                            <div class="col-2">
+                                                <i class="fas fa-hotel fa-2x"></i>
+                                            </div>
+                                            <div class="col-10">
+                                                <h4 class="card-title">
+                                                {{ status.ads }} annonces postées
+                                                </h4>
+                                            </div>
+                                    </div>
+                                </div>
+                        </div>
+              </div>
+              <div class="col">
+                  <div class="card bg-warning text-white mb-3 text-center">
+                        <div class="card-body">
+                               <div class="row">
+                                    <div class="col-2">
+                                         <i class="fas fa-folder fa-2x"></i>
+                                    </div>
+                                    <div class="col-10">
+                                        <h4 class="card-title">
+                                           {{ status.bookings }} reservations
+                                        </h4>
+                                    </div>
+                               </div>
+                        </div>
+                   </div>
+              
+              
+              </div>
+              <div class="col">
+                   <div class="card bg-success text-white mb-3 text-center">
+                        <div class="card-body">
+                               <div class="row">
+                                    <div class="col-2">
+                                         <i class="fas fa-comments fa-2x"></i>
+                                    </div>
+                                    <div class="col-10">
+                                        <h4 class="card-title">
+                                           {{ status.comments }} avis de nos visiteurs
+                                        </h4>
+                                    </div>
+                               </div>
+                        </div>
+                   </div>
+              
+              </div> 
+         </div>
+            {# //////////////////////////////////////// #}
+                <div class="row">
+                    <div class="col">
+                        <div class="alert alert-success">
+                            <h2 class="alert-heading my-3">Les annonces populaires</h2>
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                      <th>Annonce</th>
+                                      <th>Proprio</th> 
+                                      <th>moyenne</th>     
+                                    </tr>
+                                </thead>
+                                 <tbody>
+                                    {% for item in bestAds %}
+                                    <tr></tr>
+                                        <td>{{item.title}}</td>
+                                        <td>
+                                         <img src="{{item.picture}}" alt="" class="avatar-mini">{{ item.fistName }}
+                                        </td> 
+                                         <td class="text-center">
+                                         <span class="badge badge-dark">
+                                         
+                                            {{item.note | number_format(1 ,","," ")}}
+                                         </span>
+                                         </td>
+                                    </tr>
+                                    {% endfor %}
+                                 </tbody>
+                            </table>
+                        </div>
+                    </div>
+                      <div class="col">
+                        <div class="alert alert-danger">
+                            <h2 class="alert-heading my-3">Les pires annonces </h2>
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                      <th>Annonce</th>
+                                      <th>Proprio</th> 
+                                      <th>moyenne</th>     
+                                    </tr>
+                                </thead>
+                                 <tbody>
+                                    {% for item in worstAds %}
+                                    <tr></tr>
+                                        <td>{{item.title}}</td>
+                                        <td>
+                                         <img src="{{item.picture}}" alt="" class="avatar-mini">{{ item.fistName }}
+                                        </td> 
+                                         <td class="text-center">
+                                         <span class="badge badge-dark">
+                                         
+                                            {{item.note | number_format(1 ,","," ")}}
+                                         </span>
+                                         </td>
+                                    </tr>
+                                    {% endfor %}
+                                 </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+
+            {# //////////////////////////////////////// #}
+     </div>
+{% endblock %}
