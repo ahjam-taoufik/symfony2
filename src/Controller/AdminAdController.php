@@ -14,9 +14,9 @@ class AdminAdController extends AbstractController
      */
     public function index(AdRepository $repo, $page=1, PaginationServices $pagine)
     {
-        $test=$pagine->getInformation();
-        dump($test);
-        die();
+        //$test=$pagine->getInformation();
+       // dump($test);
+        //die();
         $limit=10;
         $start= $page * $limit - $limit;
         $total=count($repo->findAll());
