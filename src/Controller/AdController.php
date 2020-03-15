@@ -21,6 +21,7 @@ class AdController extends AbstractController
      * @Route("/ads", name="ads-index")
      */
     public function index(AdRepository $repo){
+     
        //$repo=$this->getDoctrine()->getRepository(Ad::class);
 
        $ads=$repo->findAll();
