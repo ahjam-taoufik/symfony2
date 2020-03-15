@@ -23,8 +23,8 @@ class BookingType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('startDate',DateType::class,$this->configure("date d'arrivée","arrivée.... ",["widget"=>"single_text"]))
-            ->add('endDate',DateType::class,$this->configure("date de départ","départ.... ",["widget"=>"single_text"]))
+            ->add('startDate',DateType::class,$this->configure("date d'arrivée","arrivée.... "/* ,["widget"=>"single_text"] */))
+            ->add('endDate',DateType::class,$this->configure("date de départ","départ.... "/* ,["widget"=>"single_text"] */))
             ->add('comment',TextareaType::class,$this->configure(false,".... ",[
                   'required'=>false
             ]))
